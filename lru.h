@@ -1,23 +1,20 @@
+#ifndef LRU_CACHE_H_
+#define LRU_CACHE_H_
+
 #include <list>
 #include <unordered_map>
 #include <optional>
-#include <iostream>
+
+#include "list_node.h"
 
 template <typename K, typename T>
-struct ListNode
-{
-    K key;
-    T data;
-};
-
-template <typename T, typename K>
 class LRUCache
 {
 public:
     using iterator = typename std::list<ListNode<K, T>>::iterator;
     using value_type = std::pair<const K, T>;
 
-    LRUCache(size_t capacity) : capacity_{capacity} {}
+    explicit LRUCache(size_t capacity) : capacity_{capacity} {}
 
     std::optional<T> find(const K &key)
     {
@@ -51,9 +48,13 @@ public:
         }
         list_.emplace_front(value.first, value.second);
         map_.emplace(value.first, list_.begin());
-        std::cout << map_.size() << '\n';
 
         return {list_.begin(), true};
+    }
+
+    std::size_t size()
+    {
+        return list_.size();
     }
 
 private:
@@ -61,3 +62,5 @@ private:
     std::unordered_map<K, iterator> map_;
     size_t capacity_;
 };
+
+#endif // LRU_CACHE_H_

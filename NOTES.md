@@ -38,3 +38,16 @@ When we evict, we also need to remove said element from the map lest we have an 
 However, the list only holds the data T, but not the key. We need to include the key inside the list node itself to properly remove the key from the map as well.
 This does create a duplicate key, however at this point the memory overhead is less important than the O(1) requirement.
 
+## Algorithm
+1. Inserting values
+    We first check whether the cache is full or not. If it is, we evict the last recently used element and remove that element from our map.
+
+    We then put the new element at the front of our list. We update the map with the new key and its iterator which is at the front of the list.
+
+2. Getting values
+    We check the existence of the key in the map, and return an empty optional if it's not found.
+
+    If it is found, we promote the element to the top of the list and return the data back to the caller.
+
+## Multithreading
+

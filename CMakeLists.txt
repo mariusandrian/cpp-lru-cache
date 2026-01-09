@@ -15,6 +15,7 @@ target_sources(LruCache
 
 target_compile_options(LruCache
   PRIVATE
+    -g
     -Wall
     -Wextra
 )
